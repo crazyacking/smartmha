@@ -1,4 +1,6 @@
 
+#include <string>
+
 #define MSTR(x) stringify(x) // Stringify a macro
 #if defined __clang__
 #define COMPILER_STR "CLANG " __clang_version__
@@ -17,3 +19,12 @@
 #else
 #define SMARTMHA_VERSION_STR "smartmha " SMARTMHA_VERSION " (" COMPILER_STR ")"
 #endif
+
+static auto GetDate() -> std::string {
+    auto now = std::chrono::system_clock::now();
+    auto tt = std::chrono::system_clock::to_time_t(now);
+    auto tm = localtime(&tt);
+    char buff[12];
+    std::sprintf(buff, "%d-%02d-%02d", tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday);
+    return buff;
+}
