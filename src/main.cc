@@ -1,23 +1,24 @@
-#include <iostream>
-#include "cxxopts.hpp"
-#include "loguru.hpp"
-#include "args_helper.hpp"
+#define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_TRACE
+
 #include "utils.hpp"
+#include "config.hpp"
+#include "logging.hpp"
+#include "config_yaml.hpp"
 
 int main(int argc, char *argv[]) {
-    loguru::init(argc, argv);
-    loguru::add_file(
-            (std::string("/tmp/smartmha/") + GetDate() + ".log").c_str(),
-            loguru::Append,
-            loguru::Verbosity_WARNING);
+    logging::OnInit();
 
-    cxxopts::Options options = InitOptions();
-    auto args = options.parse(argc, argv);
+    auto options = Option::OnInit();
+    auto args    = options.parse(argc, argv);
 
     if (args.count("help")) {
         std::cout << options.help() << std::endl;
-        return 0;
+        std::exit(EXIT_SUCCESS);
     }
+
+    configuration config(args);
+
+    std::cout << config.member.name << std::endl;
 
     return 0;
 }

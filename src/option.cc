@@ -1,15 +1,18 @@
 #include "cxxopts.hpp"
-#include "args_helper.hpp"
+#include "option.hpp"
 
-cxxopts::Options InitOptions() {
+cxxopts::Options Option::OnInit() {
     cxxopts::Options options("smartmha", "The MySQL Cluster Autopilot Management with GTID and Raft.");
 
+    // Note that if a configuration file is provided,
+    // other command line flags and environment variables will be ignored.
     options.add_options()
-            ("h,help", "display help message");
+            ("h,help", "display help message.")
+            ("c,config-file", "Path to the server configuration file.", cxxopts::value<std::string>());
 
-    options.add_options("member")(
+    options.add_options("server")(
             "name",
-            "Human-readable name for this member.",
+            "Human-readable name for this server.",
             cxxopts::value<std::string>()->default_value("default")
     )(
             "heartbeat-interval",
@@ -26,9 +29,9 @@ cxxopts::Options InitOptions() {
             "Port listen on.",
             cxxopts::value<int>()->default_value("2380"));
 
-    options.add_options("clustering")(
+    options.add_options("raft")(
             "initial-advertise-url",
-            "This member’s peer URL to advertise to the rest of the cluster. This address is used for communicating around the cluster. It must be routable to all cluster members.",
+            "This server’s peer URL to advertise to the rest of the cluster. This address is used for communicating around the cluster. It must be routable to all cluster members.",
             cxxopts::value<std::string>()->default_value("http://localhost:2380")
     )(
             "initial-cluster",
