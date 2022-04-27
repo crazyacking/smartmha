@@ -1,0 +1,31 @@
+server:
+  name: "node1"
+  port: 8881
+
+raft:
+  initial-advertise-url: xxx
+  initial-cluster: xxx,xx,xxx
+  initial-cluster-state: xxx-new
+  initial-cluster-token: xxx
+  leader-start-command: xxx
+  leader-stop-command: xxx
+  heartbeat-interval: 1000
+  heartbeat-timeout: 1000
+  election-timeout: 3000
+
+mysql:
+  base-dir: xxx
+  conf-file: xxx
+  port: 3306
+  ping-timeout: 1000
+  shutdown-on-exit: true
+  admin-user: root
+  admin-password: xxx
+  repl-user: repl
+  repl-password: xxx
+  diagnose-statements: xxx
+  heartbeat-table: heartbeat
+  cluster-view-table: cluster_view
+  heartbeat-statements: xxx
+  base-options: xxx
+  extra-options: xxx
