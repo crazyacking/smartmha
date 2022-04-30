@@ -3,7 +3,6 @@
 #include "utils.hpp"
 #include "config.hpp"
 #include "logging.hpp"
-#include "config_yaml.hpp"
 
 int main(int argc, char *argv[]) {
     logging::OnInit();

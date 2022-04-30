@@ -1,4 +1,3 @@
-#include "cxxopts.hpp"
 #include "option.hpp"
 
 cxxopts::Options Option::OnInit() {
