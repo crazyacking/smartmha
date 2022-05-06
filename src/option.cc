@@ -6,23 +6,13 @@ cxxopts::Options Option::OnInit() {
     // Note that if a configuration file is provided,
     // other command line flags and environment variables will be ignored.
     options.add_options()
-            ("h,help", "display help message.")
-            ("c,config-file", "Path to the server configuration file.", cxxopts::value<std::string>());
+            ("h,help", "Display help message.")
+            ("c,config-file", "The server configuration file.", cxxopts::value<std::string>());
 
     options.add_options("server")(
             "name",
             "Human-readable name for this server.",
             cxxopts::value<std::string>()->default_value("default")
-    )(
-            "heartbeat-interval",
-            "Time (in milliseconds) of a heartbeat interval.",
-            cxxopts::value<int>()->default_value("1000")
-
-    )(
-            "election-timeout",
-            "Time (in milliseconds) for an election to timeout.",
-            cxxopts::value<int>()->default_value("3000")
-
     )(
             "port",
             "Port listen on.",
@@ -30,12 +20,12 @@ cxxopts::Options Option::OnInit() {
 
     options.add_options("raft")(
             "initial-advertise-url",
-            "This server’s peer URL to advertise to the rest of the cluster. This address is used for communicating around the cluster. It must be routable to all cluster members.",
+            "This server’s peer URL to advertise to the rest of the cluster. This address is used for communicating around the cluster.",
             cxxopts::value<std::string>()->default_value("http://localhost:2380")
     )(
             "initial-cluster",
             "Initial cluster configuration for bootstrapping.",
-            cxxopts::value<std::string>()->default_value("default=http://localhost:2380")
+            cxxopts::value<std::string>()->default_value("node1=10.0.1.10:2380,node2=10.0.1.11:2380,node3=10.0.1.12:2380")
     )(
             "pre-leader-start-command",
             "The shell command when pre leader start.",
@@ -94,7 +84,7 @@ cxxopts::Options Option::OnInit() {
             cxxopts::value<std::string>()->default_value("")
     )(
             "initial-cluster-state",
-            "Initial cluster state ('new' or 'existing'). Set to new for all members present during initial static. If this option is set to existing, polar-ha will attempt to join the existing cluster. If the wrong value is set, polar-ha will attempt to start but fail safely.",
+            "Initial cluster state ('new' or 'existing').",
             cxxopts::value<std::string>()->default_value("")
     )(
             "initial-cluster-token",
