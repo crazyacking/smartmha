@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <chrono>
 
 #define MSTR(x) stringify(x) // Stringify a macro
 #if defined __clang__
