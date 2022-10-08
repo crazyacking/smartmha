@@ -1,7 +1,7 @@
 #pragma once
 
 #include "yaml-cpp/yaml.h"
-#include "config.hpp"
+#include "config.h"
 
 namespace YAML {
 

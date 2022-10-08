@@ -1,4 +1,4 @@
-#include "option.hpp"
+#include "option.h"
 
 cxxopts::Options Option::OnInit() {
     cxxopts::Options options("smartmha", "The MySQL Cluster Autopilot Management with GTID and Raft.");

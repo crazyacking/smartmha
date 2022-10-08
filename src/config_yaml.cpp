@@ -1,4 +1,4 @@
-#include "config_yaml.hpp"
+#include "config_yaml.h"
 
 namespace YAML {
 

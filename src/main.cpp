@@ -1,16 +1,14 @@
-#define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_TRACE
-
-#include "utils.hpp"
-#include "config.hpp"
-#include "logging.hpp"
-#include "http_client.hpp"
-#include "http_client_impl.hpp"
+#include "utils.h"
+#include "config.h"
+#include "logging.h"
+#include "http_client.h"
+#include "http_client_impl.h"
 
 int main(int argc, char *argv[]) {
     logging::OnInit();
 
     auto options = Option::OnInit();
-    auto args = options.parse(argc, argv);
+    auto args    = options.parse(argc, argv);
 
     if (args.count("help")) {
         std::cout << options.help() << std::endl;
@@ -19,14 +17,12 @@ int main(int argc, char *argv[]) {
 
     configuration config(args);
 
-    std::cout << config.member.name << std::endl;
+    SPDLOG_INFO("member name: {}", config.member.name);
 
     std::shared_ptr<HttpClient> client_ = std::make_shared<HttpClientImpl>("https://www.cnblogs.com/");
-    int status = -1;
 
+    int         status        = -1;
     std::string response_body = client_->get("", {}, &status);
-    std::cout << response_body << std::endl;
-
-
+    SPDLOG_INFO("----------- smartmha end -----------");
     return 0;
 }

@@ -1,8 +1,8 @@
 #pragma once
 
 #include <string>
-#include "logging.hpp"
-#include "option.hpp"
+#include "logging.h"
+#include "option.h"
 #include "yaml-cpp/yaml.h"
 
 struct Server {
@@ -58,8 +58,7 @@ public:
     std::string config_file;
 
 private:
-    YAML::Node                      config_yaml;
-    std::shared_ptr<spdlog::logger> logger = logging::getAppLogger();
+    YAML::Node config_yaml;
 
     void parse_yaml();
 };

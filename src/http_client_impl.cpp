@@ -2,7 +2,7 @@
 // Created by Dylan Jiang on 2022/6/30.
 //
 
-#include "http_client_impl.hpp"
+#include "http_client_impl.h"
 #include <curl/curl.h>
 
 HttpClientImpl::HttpClientImpl() = default;
@@ -73,7 +73,7 @@ std::string HttpClientImpl::get_via_curl(const std::string &path,
     curl_easy_setopt(curl, CURLOPT_TIMEOUT, timeout_sec_);
     CURLcode res = curl_easy_perform(curl);
     if (res != CURLE_OK) {
-        logger->error("error: {}", curl_easy_strerror(res));
+        SPDLOG_ERROR("error: {}", curl_easy_strerror(res));
         return "";
     }
     setup_status_code(status, curl);
@@ -98,7 +98,7 @@ std::string HttpClientImpl::post_via_curl(const std::string &path,
     curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, body.size());
     CURLcode res = curl_easy_perform(curl);
     if (res != CURLE_OK) {
-        logger->error("error: {}", curl_easy_strerror(res));
+        SPDLOG_ERROR("error: {}", curl_easy_strerror(res));
         return "";
     }
     setup_status_code(status, curl);

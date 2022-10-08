@@ -3,12 +3,8 @@
 #include "spdlog/spdlog.h"
 
 class logging {
-private:
-    static std::shared_ptr<spdlog::logger> AppLogger;
 public:
     static void OnInit();
-
-    inline static std::shared_ptr<spdlog::logger> &getAppLogger() { return AppLogger; };
 };
 
 //logging macros

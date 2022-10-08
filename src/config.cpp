@@ -1,25 +1,26 @@
 #include <map>
-#include "config.hpp"
-#include "config_yaml.hpp"
+#include "config.h"
+#include "config_yaml.h"
 
 configuration::configuration(cxxopts::ParseResult args) {
     if (args.count("config-file")) {
         config_file = args["config-file"].as<std::string>();
-        parse_yaml();
-    } else {
-        // todo: parse from args
+        if (config_file.empty()) {
+            parse_yaml();
+            return;
+        }
     }
+    SPDLOG_ERROR("required args: --config-file");
 }
 
 void configuration::parse_yaml() {
     try {
-
         config_yaml = YAML::LoadFile(config_file);
 
         // print yaml
         YAML::Emitter emitter;
         emitter << config_yaml;
-        logger->info(std::string("load config yaml:\n") + emitter.c_str());
+        SPDLOG_DEBUG("load config yaml:{}\n", emitter.c_str());
 
         Config config = config_yaml.as<Config>();
 
@@ -28,7 +29,7 @@ void configuration::parse_yaml() {
         mysql      = config.mysql;
 
     } catch (const std::exception &e) {
-        logger->error("load yaml error: {}", e.what());
+        SPDLOG_ERROR("load yaml error: {}", e.what());
         std::exit(EXIT_FAILURE);
     }
 }

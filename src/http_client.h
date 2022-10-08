@@ -2,8 +2,8 @@
 // Created by Dylan Jiang on 2022/6/30.
 //
 
-#ifndef SMARTMHA_HTTP_CLIENT_HPP
-#define SMARTMHA_HTTP_CLIENT_HPP
+#ifndef SMARTMHA_HTTP_CLIENT_H
+#define SMARTMHA_HTTP_CLIENT_H
 
 #include <string>
 #include <vector>
@@ -28,4 +28,4 @@ public:
     virtual ~HttpClient() {}
 };
 
-#endif //SMARTMHA_HTTP_CLIENT_HPP
+#endif //SMARTMHA_HTTP_CLIENT_H
