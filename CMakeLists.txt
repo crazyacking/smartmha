@@ -16,6 +16,17 @@ FetchContent_MakeAvailable(
         curl
 )
 
-aux_source_directory(src DIR_SRC)
+aux_source_directory(module DIR_SRC)
 add_executable(${PROJECT_NAME} ${DIR_SRC})
 target_link_libraries(${PROJECT_NAME} PUBLIC yaml-cpp::yaml-cpp spdlog::spdlog cxxopts::cxxopts CURL::libcurl)
+
+message("================ 1")
+
+set(BUILD_TESTS ON)
+
+if (BUILD_TESTS)
+    message("================ 2")
+    add_subdirectory(test)
+    enable_testing()
+    add_test(test_utils build/test/test_utils)
+endif ()
