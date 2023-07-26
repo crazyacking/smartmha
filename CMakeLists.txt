@@ -2,31 +2,31 @@ cmake_minimum_required(VERSION 3.21 FATAL_ERROR)
 project(smartmha VERSION 1.0.0 LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 14)
-include(FetchContent)
 
+set(ARG_DOWNLOAD_EXTRACT_TIMESTAMP TRUE)
+cmake_policy(SET CMP0135 NEW)
+
+message("-- system arch:  ${CMAKE_SYSTEM_PROCESSOR}")
+message("-- output path:  ${PROJECT_OUTPUT_DIR}")
+
+include(FetchContent)
 FetchContent_Declare(cxxopts URL https://github.com/jarro2783/cxxopts/archive/refs/tags/v3.0.0.tar.gz)
 FetchContent_Declare(yaml-cpp URL https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz)
 FetchContent_Declare(spdlog URL https://github.com/gabime/spdlog/archive/refs/tags/v1.10.0.tar.gz)
 FetchContent_Declare(curl URL https://github.com/curl/curl/archive/refs/tags/curl-7_79_1.tar.gz)
+FetchContent_MakeAvailable(cxxopts yaml-cpp spdlog curl)
 
-FetchContent_MakeAvailable(
-        cxxopts
-        yaml-cpp
-        spdlog
-        curl
-)
+aux_source_directory(module SOURCE_FILE_LIST)
+message(STATUS "source files: ${SOURCE_FILE_LIST}")
+add_executable(${PROJECT_NAME} ${SOURCE_FILE_LIST})
+target_link_libraries(${PROJECT_NAME} PRIVATE yaml-cpp::yaml-cpp spdlog::spdlog cxxopts::cxxopts CURL::libcurl)
 
-aux_source_directory(module DIR_SRC)
-add_executable(${PROJECT_NAME} ${DIR_SRC})
-target_link_libraries(${PROJECT_NAME} PUBLIC yaml-cpp::yaml-cpp spdlog::spdlog cxxopts::cxxopts CURL::libcurl)
-
-message("================ 1")
+#add_library(libsmartmha SHARED STATIC ${SOURCE_FILE_LIST} )
+#install(TARGETS libsmartmha DESTINATION ${SMARTMHA_INSTALL_LIB_DIR})
 
 set(BUILD_TESTS ON)
 
 if (BUILD_TESTS)
-    message("================ 2")
+    message("BUILD_TESTS: ON")
     add_subdirectory(test)
-    enable_testing()
-    add_test(test_utils build/test/test_utils)
 endif ()
