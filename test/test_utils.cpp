@@ -2,12 +2,13 @@
 // Created by Dylan Jiang on 2022/10/8.
 //
 
-#include <cstdio>
+#include "utils.h"
 #include <iostream>
 
 using namespace std;
 
 int main() {
-    cout << "hello world" << endl;
+    const auto date = GetDate();
+    cout << date << endl;
     return 0;
 }

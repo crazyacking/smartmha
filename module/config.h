@@ -49,7 +49,7 @@ struct Config {
 
 class configuration {
 public:
-    configuration(cxxopts::ParseResult args);
+    configuration(const cxxopts::ParseResult& args);
 
     Server member;
     Raft   clustering;

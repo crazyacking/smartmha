@@ -2,7 +2,7 @@
 #include "config.h"
 #include "config_yaml.h"
 
-configuration::configuration(cxxopts::ParseResult args) {
+configuration::configuration(const cxxopts::ParseResult& args) {
     if (args.count("config-file")) {
         config_file = args["config-file"].as<std::string>();
         if (config_file.empty()) {
