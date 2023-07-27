@@ -2,19 +2,12 @@
 // Created by Dylan Jiang on 2022/6/30.
 //
 
-#include "http_client_impl.h"
-#include <curl/curl.h>
+#include "http_client.h"
+#include "log.h"
+#include "spdlog/logger.h"
 
-HttpClientImpl::HttpClientImpl() = default;
-
-HttpClientImpl::HttpClientImpl(const std::string &host_port, bool verbose)
-    : verbose_(verbose) {
-    set_host(host_port);
-    host_port_ = host_port;
-    curl_global_init(CURL_GLOBAL_ALL);
-}
-
-HttpClientImpl::~HttpClientImpl() { curl_global_cleanup(); }
+HttpClient::HttpClient(const std::string &host_port)
+    : host_port_(host_port) {}
 
 static void setup_status_code(int *output, CURL *curl) {
     long http_code = 0;
@@ -22,6 +15,25 @@ static void setup_status_code(int *output, CURL *curl) {
     if (output) {
         *output = (int)http_code;
     }
+}
+
+void HttpClient::set_host(const std::string &host_port) { host_port_ = host_port; }
+
+std::string HttpClient::get(const std::string &path, const std::vector<std::string> &headers, int *status) const {
+    return get_via_curl(path, headers, status);
+}
+
+std::string HttpClient::post(const std::string &path, const std::string &body, const std::vector<std::string> &headers,
+                             int *status) const {
+    return post_via_curl(path, body, headers, status);
+}
+
+void HttpClient::set_timeout(const int &timeout_sec) { timeout_sec_ = timeout_sec; }
+
+void HttpClient::set_connect_timeout(const int &connect_timeout_sec) { connect_timeout_sec_ = connect_timeout_sec; }
+
+inline std::string HttpClient::url(const std::string &path) const {
+    return path.empty() ? host_port_ : host_port_ + (path[0] == '/' ? "" : "/") + path;
 }
 
 static void setup_curl_headers(CURL *curl, const std::vector<std::string> &headers) {
@@ -46,29 +58,27 @@ static size_t curl_write_callback_func(void *contents, size_t size, size_t nmemb
     return newLength;
 }
 
-static void setup_curl_common(CURL *curl, const std::string &url, const std::vector<std::string> &headers, bool verbose,
-                              std::string *resp_body = nullptr) {
+void HttpClient::setup_curl_common(CURL *curl, const std::string &url, const std::vector<std::string> &headers,
+                                   bool verbose, std::string *resp_body) {
     curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
     curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_VERBOSE, verbose ? 1L : 0L);
     setup_curl_headers(curl, headers);
-    if (verbose) {
-        curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L); // 允许curl打印出冗长的操作信息
-    }
     if (resp_body) {
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curl_write_callback_func);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, resp_body);
     }
 }
 
-std::string HttpClientImpl::get_via_curl(const std::string &path, const std::vector<std::string> &headers,
-                                         int *status) const {
+std::string HttpClient::get_via_curl(const std::string &path, const std::vector<std::string> &headers,
+                                     int *status) const {
     CURL *curl = curl_easy_init();
     if (!curl)
         return "";
 
     std::string resp_body;
-    setup_curl_common(curl, url(path), headers, verbose_, &resp_body);
+    setup_curl_common(curl, url(path), headers, false, &resp_body);
     curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, connect_timeout_sec_);
     curl_easy_setopt(curl, CURLOPT_TIMEOUT, timeout_sec_);
     CURLcode res = curl_easy_perform(curl);
@@ -81,14 +91,14 @@ std::string HttpClientImpl::get_via_curl(const std::string &path, const std::vec
     return resp_body;
 }
 
-std::string HttpClientImpl::post_via_curl(const std::string &path, const std::string &body,
-                                          const std::vector<std::string> &headers, int *status) const {
+std::string HttpClient::post_via_curl(const std::string &path, const std::string &body,
+                                      const std::vector<std::string> &headers, int *status) const {
     CURL *curl = curl_easy_init();
     if (!curl) {
         return "";
     }
     std::string resp_body;
-    setup_curl_common(curl, url(path), headers, verbose_, &resp_body);
+    setup_curl_common(curl, url(path), headers, false, &resp_body);
     curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, connect_timeout_sec_);
     curl_easy_setopt(curl, CURLOPT_TIMEOUT, timeout_sec_);
     curl_easy_setopt(curl, CURLOPT_POST, 1L);

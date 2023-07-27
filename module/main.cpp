@@ -1,14 +1,14 @@
 #include "config.h"
 #include "http_client.h"
-#include "http_client_impl.h"
-#include "logging.h"
+#include "log.h"
 #include "utils.h"
 
 int main(int argc, char *argv[]) {
-    logging::init();
-
+    log::init();
     auto options    = Option::init();
     const auto args = options.parse(argc, argv);
+
+    CurlGlobalHelper global_helper;
 
     if (args.count("help")) {
         std::cout << options.help() << std::endl;
@@ -16,13 +16,15 @@ int main(int argc, char *argv[]) {
     }
 
     configuration config(args);
-
     SPDLOG_INFO("member name: {}", config.member.name);
 
-    std::shared_ptr<HttpClient> client_ = std::make_shared<HttpClientImpl>("https://www.cnblogs.com/");
+    std::unique_ptr<HttpClient> client_ = std::make_unique<HttpClient>("https://www.cnblogs.com/");
 
-    int status                = -1;
+    int status{-1};
     std::string response_body = client_->get("", {}, &status);
+    if (status == 200) {
+        SPDLOG_INFO("response_body={}", response_body);
+    }
     SPDLOG_INFO("----------- smartmha end -----------");
     return 0;
 }

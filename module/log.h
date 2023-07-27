@@ -2,7 +2,7 @@
 
 #include "spdlog/spdlog.h"
 
-class logging {
+class log {
   public:
     static void init();
 };

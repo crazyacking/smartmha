@@ -20,7 +20,7 @@ void configuration::parse_yaml() {
         // print yaml
         YAML::Emitter emitter;
         emitter << config_yaml;
-        SPDLOG_DEBUG("load config yaml:{}\n", emitter.c_str());
+        SPDLOG_DEBUG("load config yaml:{}", emitter.c_str());
 
         Config config = config_yaml.as<Config>();
 

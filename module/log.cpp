@@ -1,7 +1,7 @@
-#include "logging.h"
+#include "log.h"
 #include "spdlog/sinks/daily_file_sink.h"
 
-void logging::init() {
+void log::init() {
     spdlog::set_pattern("[%Y-%m-%d %T.%e][%L][%t][%s:%#][%!] %v");
 
     // create a daily logger - a new file is created every day on 2:30am.

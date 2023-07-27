@@ -1,6 +1,6 @@
 #pragma once
 
-#include "logging.h"
+#include "log.h"
 #include "option.h"
 #include "yaml-cpp/yaml.h"
 #include <string>
