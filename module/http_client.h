@@ -9,17 +9,14 @@
 #include <vector>
 
 class HttpClient {
-public:
+  public:
     virtual void set_host(const std::string &host_port) = 0;
 
-    virtual std::string get(const std::string &path,
-                            const std::vector<std::string> &headers = {},
+    virtual std::string get(const std::string &path, const std::vector<std::string> &headers = {},
                             int *status = nullptr) const = 0;
 
-    virtual std::string post(const std::string &path,
-                             const std::string &body,
-                             const std::vector<std::string> &headers = {},
-                             int *status = nullptr) const = 0;
+    virtual std::string post(const std::string &path, const std::string &body,
+                             const std::vector<std::string> &headers = {}, int *status = nullptr) const = 0;
 
     virtual void set_timeout(const int &sec) = 0;
 
@@ -28,4 +25,4 @@ public:
     virtual ~HttpClient() {}
 };
 
-#endif //SMARTMHA_HTTP_CLIENT_H
+#endif // SMARTMHA_HTTP_CLIENT_H

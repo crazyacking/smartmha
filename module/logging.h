@@ -3,11 +3,11 @@
 #include "spdlog/spdlog.h"
 
 class logging {
-public:
-    static void OnInit();
+  public:
+    static void init();
 };
 
-//logging macros
+// logging macros
 #ifdef _DEBUG
 #define MHA_TRACE(...) logging::getAppLogger()->trace(__VA_ARGS__)
 #define MHA_INFO(...)  logging::getAppLogger()->info(__VA_ARGS__)
@@ -22,4 +22,3 @@ public:
 #define MHA_ERROR(...) logging::getAppLogger()->error(__VA_ARGS__)
 #define MHA_FATAL(...) logging::getAppLogger()->fatal(__VA_ARGS__)
 #endif
-

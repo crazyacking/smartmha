@@ -2,17 +2,12 @@
 
 namespace YAML {
 
-template<typename T>
+template <typename T>
 void convert_(const Node &node, const std::string &key, T &t) {
-    if (!node.IsDefined() ||
-        node.IsNull() ||
-        !node[key].IsDefined() ||
-        node[key].IsNull())
+    if (!node.IsDefined() || node.IsNull() || !node[key].IsDefined() || node[key].IsNull())
         return;
 
-    if ((typeid(T) == typeid(std::string) ||
-         typeid(T) == typeid(int) ||
-         typeid(T) == typeid(bool)) &&
+    if ((typeid(T) == typeid(std::string) || typeid(T) == typeid(int) || typeid(T) == typeid(bool)) &&
         !node[key].IsScalar())
         return;
 
@@ -44,7 +39,6 @@ bool convert<Config>::decode(const Node &node, Config &c) {
     convert_(node["raft"], "heartbeat-timeout", c.raft.heartbeat_timeout);
     convert_(node["raft"], "election-timeout", c.raft.election_timeout);
 
-
     // mysql
     convert_(node["mysql"], "port", c.mysql.port);
     convert_(node["mysql"], "admin-user", c.mysql.admin_user);
@@ -65,4 +59,4 @@ bool convert<Config>::decode(const Node &node, Config &c) {
     return true;
 }
 
-}
+} // namespace YAML

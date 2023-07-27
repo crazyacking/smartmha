@@ -1,7 +1,7 @@
 #pragma once
 
-#include <string>
 #include <chrono>
+#include <string>
 
 #define MSTR(x) stringify(x) // Stringify a macro
 #if defined __clang__
@@ -17,7 +17,9 @@
 #define SMARTMHA_VERSION "v1.0.0"
 
 #ifndef NDEBUG
-#define SMARTMHA_VERSION_STR "smartmha " SMARTMHA_VERSION " (debug)" " (" COMPILER_STR ")"
+#define SMARTMHA_VERSION_STR                                                                                           \
+    "smartmha " SMARTMHA_VERSION " (debug)"                                                                            \
+    " (" COMPILER_STR ")"
 #else
 #define SMARTMHA_VERSION_STR "smartmha " SMARTMHA_VERSION " (" COMPILER_STR ")"
 #endif

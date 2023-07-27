@@ -7,7 +7,8 @@
 
 HttpClientImpl::HttpClientImpl() = default;
 
-HttpClientImpl::HttpClientImpl(const std::string &host_port, bool verbose) : verbose_(verbose) {
+HttpClientImpl::HttpClientImpl(const std::string &host_port, bool verbose)
+    : verbose_(verbose) {
     set_host(host_port);
     host_port_ = host_port;
     curl_global_init(CURL_GLOBAL_ALL);
@@ -19,7 +20,7 @@ static void setup_status_code(int *output, CURL *curl) {
     long http_code = 0;
     curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_code);
     if (output) {
-        *output = (int) http_code;
+        *output = (int)http_code;
     }
 }
 
@@ -28,7 +29,7 @@ static void setup_curl_headers(CURL *curl, const std::vector<std::string> &heade
         return;
     }
     struct curl_slist *chunk = nullptr;
-    for (const auto &pair: headers) {
+    for (const auto &pair : headers) {
         chunk = curl_slist_append(chunk, pair.c_str());
     }
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
@@ -37,7 +38,7 @@ static void setup_curl_headers(CURL *curl, const std::vector<std::string> &heade
 static size_t curl_write_callback_func(void *contents, size_t size, size_t nmemb, std::string *s) {
     size_t newLength = size * nmemb;
     try {
-        s->append((char *) contents, newLength);
+        s->append((char *)contents, newLength);
     } catch (std::bad_alloc &e) {
         // handle memory problem
         return 0;
@@ -45,8 +46,7 @@ static size_t curl_write_callback_func(void *contents, size_t size, size_t nmemb
     return newLength;
 }
 
-static void setup_curl_common(CURL *curl, const std::string &url,
-                              const std::vector<std::string> &headers, bool verbose,
+static void setup_curl_common(CURL *curl, const std::string &url, const std::vector<std::string> &headers, bool verbose,
                               std::string *resp_body = nullptr) {
     curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
     curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
@@ -61,11 +61,11 @@ static void setup_curl_common(CURL *curl, const std::string &url,
     }
 }
 
-std::string HttpClientImpl::get_via_curl(const std::string &path,
-                                         const std::vector<std::string> &headers,
+std::string HttpClientImpl::get_via_curl(const std::string &path, const std::vector<std::string> &headers,
                                          int *status) const {
     CURL *curl = curl_easy_init();
-    if (!curl) return "";
+    if (!curl)
+        return "";
 
     std::string resp_body;
     setup_curl_common(curl, url(path), headers, verbose_, &resp_body);
@@ -81,10 +81,8 @@ std::string HttpClientImpl::get_via_curl(const std::string &path,
     return resp_body;
 }
 
-std::string HttpClientImpl::post_via_curl(const std::string &path,
-                                          const std::string &body,
-                                          const std::vector<std::string> &headers,
-                                          int *status) const {
+std::string HttpClientImpl::post_via_curl(const std::string &path, const std::string &body,
+                                          const std::vector<std::string> &headers, int *status) const {
     CURL *curl = curl_easy_init();
     if (!curl) {
         return "";
@@ -105,4 +103,3 @@ std::string HttpClientImpl::post_via_curl(const std::string &path,
     curl_easy_cleanup(curl);
     return resp_body;
 }
-
