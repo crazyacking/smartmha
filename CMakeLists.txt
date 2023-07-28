@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.21 FATAL_ERROR)
 project(smartmha VERSION 1.0.0 LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -23,7 +23,7 @@ message(STATUS "source files: ${SOURCE_FILE_LIST}")
 add_executable(${PROJECT_NAME} ${SOURCE_FILE_LIST})
 target_link_libraries(${PROJECT_NAME} PRIVATE yaml-cpp::yaml-cpp spdlog::spdlog cxxopts::cxxopts CURL::libcurl)
 
-add_library(libsmartmha STATIC ${SOURCE_FILE_LIST} )
+add_library(libsmartmha STATIC ${SOURCE_FILE_LIST})
 target_link_libraries(lib${PROJECT_NAME} PRIVATE yaml-cpp::yaml-cpp spdlog::spdlog cxxopts::cxxopts CURL::libcurl)
 
 install(TARGETS libsmartmha DESTINATION ${SMARTMHA_INSTALL_LIB_DIR})
