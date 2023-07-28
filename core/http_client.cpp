@@ -19,22 +19,34 @@ static void setup_status_code(int *output, CURL *curl) {
     }
 }
 
-void HttpClient::set_host(const std::string &host_port) { host_port_ = host_port; }
+void HttpClient::set_host(const std::string &host_port) {
+    WLockGuard w_lock(mutex_);
+    host_port_ = host_port;
+}
 
 std::string HttpClient::get(const std::string &path, const std::vector<std::string> &headers, int *status) const {
+    RLockGuard r_lock(mutex_);
     return get_via_curl(path, headers, status);
 }
 
 std::string HttpClient::post(const std::string &path, const std::string &body, const std::vector<std::string> &headers,
                              int *status) const {
+    RLockGuard r_lock(mutex_);
     return post_via_curl(path, body, headers, status);
 }
 
-void HttpClient::set_timeout(const int &timeout_sec) { timeout_sec_ = timeout_sec; }
+void HttpClient::set_timeout(const int &timeout_sec) {
+    WLockGuard w_lock(mutex_);
+    timeout_sec_ = timeout_sec;
+}
 
-void HttpClient::set_connect_timeout(const int &connect_timeout_sec) { connect_timeout_sec_ = connect_timeout_sec; }
+void HttpClient::set_connect_timeout(const int &connect_timeout_sec) {
+    WLockGuard w_lock(mutex_);
+    connect_timeout_sec_ = connect_timeout_sec;
+}
 
 inline std::string HttpClient::url(const std::string &path) const {
+    RLockGuard r_lock(mutex_);
     return path.empty() ? host_port_ : host_port_ + (path[0] == '/' ? "" : "/") + path;
 }
 

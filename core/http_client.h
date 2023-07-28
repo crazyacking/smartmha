@@ -6,6 +6,7 @@
 #define SMARTMHA_HTTP_CLIENT_H
 
 #include "base.h"
+#include "utils.h"
 #include <curl/curl.h>
 #include <string>
 #include <vector>
@@ -32,6 +33,8 @@ class HttpClient {
     std::string host_port_;
     int timeout_sec_         = 60;
     int connect_timeout_sec_ = 120;
+
+    mutable MHARWLock mutex_;
 
     std::string url(const std::string &path) const;
 
