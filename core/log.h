@@ -1,6 +1,9 @@
 #pragma once
 
+#include "base.h"
 #include "spdlog/spdlog.h"
+
+MHA_NAMESPACE_BEGIN
 
 class log {
   public:
@@ -22,3 +25,5 @@ class log {
 #define MHA_ERROR(...) logging::getAppLogger()->error(__VA_ARGS__)
 #define MHA_FATAL(...) logging::getAppLogger()->fatal(__VA_ARGS__)
 #endif
+
+MHA_NAMESPACE_END

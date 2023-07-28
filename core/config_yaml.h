@@ -4,6 +4,7 @@
 #include "yaml-cpp/yaml.h"
 
 namespace YAML {
+using namespace MHA_NAMESPACE;
 
 template <>
 struct convert<Config> {

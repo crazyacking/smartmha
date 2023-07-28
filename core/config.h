@@ -1,9 +1,11 @@
 #pragma once
 
+#include "base.h"
 #include "log.h"
 #include "option.h"
 #include "yaml-cpp/yaml.h"
-#include <string>
+
+MHA_NAMESPACE_BEGIN
 
 struct Server {
     std::string name = "default";
@@ -61,3 +63,5 @@ class configuration {
 
     void parse_yaml();
 };
+
+MHA_NAMESPACE_END

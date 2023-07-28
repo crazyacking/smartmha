@@ -6,6 +6,7 @@
 #include <iostream>
 
 using namespace std;
+using namespace MHA_NAMESPACE;
 
 int main() {
     const auto date = GetDate();

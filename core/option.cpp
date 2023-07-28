@@ -1,5 +1,7 @@
 #include "option.h"
 
+MHA_NAMESPACE_BEGIN
+
 cxxopts::Options Option::init() {
     cxxopts::Options options("smartmha", "The MySQL Cluster Autopilot Management with GTID and Raft.");
 
@@ -53,3 +55,5 @@ cxxopts::Options Option::init() {
 
     return options;
 }
+
+MHA_NAMESPACE_END

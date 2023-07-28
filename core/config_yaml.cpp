@@ -14,7 +14,7 @@ void convert_(const Node &node, const std::string &key, T &t) {
     t = node[key].as<T>();
 }
 
-Node encode(const Config &c) {
+Node convert<Config>::encode(const Config &c) {
     Node node; // todo
     return node;
 }

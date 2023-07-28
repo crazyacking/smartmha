@@ -1,6 +1,8 @@
 #include "log.h"
 #include "spdlog/sinks/daily_file_sink.h"
 
+MHA_NAMESPACE_BEGIN
+
 void log::init() {
     spdlog::set_pattern("[%Y-%m-%d %T.%e][%L][%t][%s:%#][%!] %v");
 
@@ -9,3 +11,5 @@ void log::init() {
     default_logger->set_level(spdlog::level::debug);
     spdlog::set_default_logger(default_logger);
 }
+
+MHA_NAMESPACE_END

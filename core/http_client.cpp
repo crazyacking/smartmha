@@ -6,6 +6,8 @@
 #include "log.h"
 #include "spdlog/logger.h"
 
+MHA_NAMESPACE_BEGIN
+
 HttpClient::HttpClient(const std::string &host_port)
     : host_port_(host_port) {}
 
@@ -113,3 +115,5 @@ std::string HttpClient::post_via_curl(const std::string &path, const std::string
     curl_easy_cleanup(curl);
     return resp_body;
 }
+
+MHA_NAMESPACE_END

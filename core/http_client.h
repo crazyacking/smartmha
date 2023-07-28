@@ -5,9 +5,12 @@
 #ifndef SMARTMHA_HTTP_CLIENT_H
 #define SMARTMHA_HTTP_CLIENT_H
 
+#include "base.h"
 #include <curl/curl.h>
 #include <string>
 #include <vector>
+
+MHA_NAMESPACE_BEGIN
 
 class HttpClient {
   public:
@@ -41,11 +44,6 @@ class HttpClient {
                                   bool verbose, std::string *resp_body = nullptr);
 };
 
-class CurlGlobalHelper {
-  public:
-    CurlGlobalHelper() { curl_global_init(CURL_GLOBAL_ALL); }
-
-    ~CurlGlobalHelper() { curl_global_cleanup(); }
-};
-
 #endif // SMARTMHA_HTTP_CLIENT_H
+
+MHA_NAMESPACE_END

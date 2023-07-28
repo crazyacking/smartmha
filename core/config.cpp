@@ -2,6 +2,8 @@
 #include "config_yaml.h"
 #include <map>
 
+MHA_NAMESPACE_BEGIN
+
 configuration::configuration(const cxxopts::ParseResult &args) {
     if (args.count("config-file")) {
         config_file = args["config-file"].as<std::string>();
@@ -33,3 +35,5 @@ void configuration::parse_yaml() {
         std::exit(EXIT_FAILURE);
     }
 }
+
+MHA_NAMESPACE_END
