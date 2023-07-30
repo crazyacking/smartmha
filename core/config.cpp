@@ -45,7 +45,6 @@ void configuration::parse_yaml() {
         member     = config.server;
         clustering = config.raft;
         mysql      = config.mysql;
-
     } catch (const std::exception &e) {
         SPDLOG_ERROR("load yaml error: {}", e.what());
         std::exit(EXIT_FAILURE);
