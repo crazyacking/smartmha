@@ -1,8 +1,10 @@
-set(module smartmha)
-cmake_minimum_required(VERSION 3.21 FATAL_ERROR)
-set(CMAKE_CXX_STANDARD 14)
+set(BUILD_TESTS ON)
 
-message("===> BUILD TEST")
+message("-- BUILD_TESTS: ${BUILD_TESTS}")
+if (NOT BUILD_TESTS)
+    return()
+endif ()
+
 set(PROJECT_TEST_BINARY_DIR .)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_TEST_BINARY_DIR})
 
