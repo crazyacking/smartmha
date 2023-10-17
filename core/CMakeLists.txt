@@ -5,6 +5,8 @@ FetchContent_Declare(spdlog URL https://github.com/gabime/spdlog/archive/refs/ta
 FetchContent_Declare(curl URL https://github.com/curl/curl/archive/refs/tags/curl-7_79_1.tar.gz)
 FetchContent_MakeAvailable(cxxopts yaml-cpp spdlog curl)
 
+add_subdirectory(raft)
+
 aux_source_directory(. SOURCE_FILE_LIST)
 message(STATUS "source files: ${SOURCE_FILE_LIST}")
 add_executable(${PROJECT_NAME} ${SOURCE_FILE_LIST})
