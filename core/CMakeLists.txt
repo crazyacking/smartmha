@@ -6,6 +6,7 @@ FetchContent_Declare(curl URL https://github.com/curl/curl/archive/refs/tags/cur
 FetchContent_MakeAvailable(cxxopts yaml-cpp spdlog curl)
 
 add_subdirectory(raft)
+add_subdirectory(base)
 
 aux_source_directory(. SOURCE_FILE_LIST)
 message(STATUS "source files: ${SOURCE_FILE_LIST}")
