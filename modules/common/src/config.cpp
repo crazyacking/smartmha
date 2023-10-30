@@ -14,8 +14,8 @@
 
 // Authors: Dylan Jiang(crazyacking@gmail.com)
 
-#include "config.h"
-#include "config_yaml.h"
+#include "mha/config.h"
+#include "mha/config_yaml.h"
 #include <map>
 
 MHA_NAMESPACE_BEGIN

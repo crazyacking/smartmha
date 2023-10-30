@@ -19,6 +19,7 @@
 #include "http_client.h"
 #include "log.h"
 #include "utils.h"
+#include "mha/raft.h"
 
 using namespace MHA_NAMESPACE;
 using namespace std;

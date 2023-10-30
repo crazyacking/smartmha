@@ -11,5 +11,5 @@ message("-- Hostname: ${HOSTNAME}")
 message("-- System arch: ${CMAKE_SYSTEM_PROCESSOR}")
 message("-- Output path: ${PROJECT_OUTPUT_DIR}")
 
-add_subdirectory(core)
+add_subdirectory(modules)
 add_subdirectory(test)
