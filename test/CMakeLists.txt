@@ -7,7 +7,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}   -fstack-protector-all")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-protector-all")
 
-set(BUILD_TESTS ON)
+set(BUILD_TESTS "build tests" ON)
 
 message("-- BUILD_TESTS: ${BUILD_TESTS}")
 if (NOT BUILD_TESTS)

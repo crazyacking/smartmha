@@ -14,7 +14,7 @@
 
 // Authors: Dylan Jiang(crazyacking@gmail.com)
 
-#include "option.h"
+#include "mha/option.h"
 
 MHA_NAMESPACE_BEGIN
 

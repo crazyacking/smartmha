@@ -9,4 +9,6 @@ message(STATUS "header files: ${headers}")
 message(STATUS "source files: ${sources}")
 
 add_library(${module} ${headers} ${sources})
-add_library(${META_PROJECT_NAME}::${module} ALIAS ${module})
+add_library(${PROJECT_NAME}::${module} ALIAS ${module})
+
+target_include_directories(${module} PUBLIC include)

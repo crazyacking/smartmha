@@ -14,12 +14,13 @@
 
 // Authors: Dylan Jiang(crazyacking@gmail.com)
 
-#include "config.h"
-#include "global.h"
-#include "http_client.h"
-#include "log.h"
-#include "utils.h"
+#include "mha/config.h"
+#include "mha/global.h"
+#include "mha/http_client.h"
+#include "mha/log.h"
+#include "mha/utils.h"
 #include "mha/raft.h"
+#include <iostream>
 
 using namespace MHA_NAMESPACE;
 using namespace std;
@@ -44,8 +45,10 @@ int main(int argc, char *argv[]) {
     int status{-1};
     std::string response_body = client_->get("", {}, &status);
     if (status == 200) {
-        SPDLOG_INFO("response_body={}", response_body);
+        std::cout << "response_body=" << response_body << std::endl;
+        // SPDLOG_INFO("response_body={}", response_body);
     }
-    SPDLOG_INFO("----------- smartmha end -----------");
+    std::cout << "----------- smartmha end -----------" << std::endl;
+    // SPDLOG_INFO("----------- smartmha end -----------");
     return 0;
 }

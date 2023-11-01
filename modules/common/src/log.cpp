@@ -14,7 +14,7 @@
 
 // Authors: Dylan Jiang(crazyacking@gmail.com)
 
-#include "log.h"
+#include "mha/log.h"
 #include "spdlog/sinks/daily_file_sink.h"
 
 MHA_NAMESPACE_BEGIN

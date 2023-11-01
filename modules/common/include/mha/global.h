@@ -29,7 +29,7 @@ class GlobalInitializer {
     GlobalInitializer() {
         const auto res = curl_global_init(CURL_GLOBAL_ALL);
         if (res != CURLE_OK) {
-            SPDLOG_ERROR("could not initialize curl! error_code: {}", res);
+            // SPDLOG_ERROR("could not initialize curl! error_code: {}", res);
         }
     }
 

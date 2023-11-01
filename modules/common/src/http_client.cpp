@@ -14,8 +14,8 @@
 
 // Authors: Dylan Jiang(crazyacking@gmail.com)
 
-#include "http_client.h"
-#include "log.h"
+#include "mha/http_client.h"
+#include "mha/log.h"
 #include "spdlog/logger.h"
 
 MHA_NAMESPACE_BEGIN

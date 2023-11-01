@@ -14,7 +14,7 @@
 
 // Authors: Dylan Jiang(crazyacking@gmail.com)
 
-#include "config_yaml.h"
+#include "mha/config_yaml.h"
 
 namespace YAML {
 
