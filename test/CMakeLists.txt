@@ -1,8 +1,5 @@
 set(module test_smartmha)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}   -fstack-protector-all")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-protector-all")
-
 set(BUILD_TESTS "build tests" ON)
 
 message("-- BUILD_TESTS: ${BUILD_TESTS}")
@@ -10,53 +7,32 @@ if (NOT BUILD_TESTS)
     return()
 endif ()
 
-set(PROJECT_TEST_BINARY_DIR .)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_TEST_BINARY_DIR})
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}   -fstack-protector-all")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-protector-all")
 
-add_library(${module} SHARED ${CMAKE_CURRENT_LIST_DIR}/empty.cpp)
-add_library(${PROJECT_NAME}::${module} ALIAS ${module})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY .)
 
-include_directories(${PROJECT_SOURCE_DIR}/modules)
+include(FetchContent)
+FetchContent_Declare(googletest URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.tar.gz)
+FetchContent_MakeAvailable(googletest)
 
-target_include_directories(${module} INTERFACE
-        yaml-cpp::yaml-cpp
-        spdlog::spdlog
-        cxxopts::cxxopts
-        CURL::libcurl
-        ${PROJECT_NAME}::base
-        ${PROJECT_NAME}::raft
-        ${PROJECT_NAME}::common
+enable_testing()
+
+include_directories(
+        ${PROJECT_SOURCE_DIR}/modules/base/include
+        ${PROJECT_SOURCE_DIR}/modules/raft/include
+        ${PROJECT_SOURCE_DIR}/modules/common/include
 )
 
-file(GLOB_RECURSE TEST_FILE_LIST main.cpp)
-foreach (test_file ${TEST_FILE_LIST})
-    string(REGEX REPLACE "(^.*/|.cpp$)" "" exe ${test_file})
-    message("add_executable: ${exe} ${test_file}")
-    add_executable(${exe} ${test_file})
-    #    target_link_libraries(${exe} PRIVATE libsmartmha)
-
-    target_link_libraries(${exe}
-            yaml-cpp::yaml-cpp
-            spdlog::spdlog
-            cxxopts::cxxopts
-            CURL::libcurl
+file(GLOB TEST_FILES *.cpp)
+foreach (TEST_FILE ${TEST_FILES})
+    get_filename_component(TEST_NAME ${TEST_FILE} NAME_WLE)
+    add_executable(${TEST_NAME} ${TEST_FILE})
+    target_link_libraries(${TEST_NAME}
+            gtest_main
             ${PROJECT_NAME}::base
             ${PROJECT_NAME}::raft
             ${PROJECT_NAME}::common
-            ${PROJECT_NAME}::${module}
     )
-
-    target_include_directories(${exe} PUBLIC
-            yaml-cpp::yaml-cpp
-            spdlog::spdlog
-            cxxopts::cxxopts
-            CURL::libcurl
-            ${PROJECT_NAME}::base
-            ${PROJECT_NAME}::raft
-            ${PROJECT_NAME}::common
-            ${PROJECT_NAME}::${module}
-    )
-
-
-    install(TARGETS ${exe} RUNTIME DESTINATION ${INSTALL_BIN} COMPONENT runtime)
-endforeach (test_file)
+    add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME})
+endforeach ()
