@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "base.h"
+#include "mha/base.h"
 #include "spdlog/spdlog.h"
 
 MHA_NAMESPACE_BEGIN

@@ -19,7 +19,7 @@
 #ifndef SMARTMHA_HTTP_CLIENT_H
 #define SMARTMHA_HTTP_CLIENT_H
 
-#include "base.h"
+#include "mha/base.h"
 #include "utils.h"
 #include <curl/curl.h>
 #include <string>

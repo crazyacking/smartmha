@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "base.h"
+#include "mha/base.h"
 #include <atomic>
 #include <cassert>
 #include <chrono>

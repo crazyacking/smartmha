@@ -19,6 +19,7 @@
 #ifndef SMARTMHA_GLOBAL_H
 #define SMARTMHA_GLOBAL_H
 
+#include "mha/base.h"
 #include "log.h"
 #include <curl/curl.h>
 
