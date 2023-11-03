@@ -1,6 +1,7 @@
 set(module test_smartmha)
 
-set(BUILD_TESTS "build tests" ON)
+option(BUILD_TESTS "build tests" ON)
+set(BUILD_TESTS ON)
 
 message("-- BUILD_TESTS: ${BUILD_TESTS}")
 if (NOT BUILD_TESTS)

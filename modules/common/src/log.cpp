@@ -19,13 +19,15 @@
 
 MHA_NAMESPACE_BEGIN
 
+std::shared_ptr<spdlog::logger> log::logger_ = nullptr;
+
 void log::init() {
     spdlog::set_pattern("[%Y-%m-%d %T.%e][%L][%t][%s:%#][%!] %v");
 
     // create a daily logger - a new file is created every day on 2:30am.
-    auto default_logger = spdlog::daily_logger_mt("smartmha", "logs/smartmha.log", 2, 30, false, 7);
-    default_logger->set_level(spdlog::level::debug);
-    spdlog::set_default_logger(default_logger);
+    log::logger_ = spdlog::daily_logger_mt("smartmha", "smartmha.log", 2, 30, false, 7);
+    log::logger_->set_level(spdlog::level::debug);
+    spdlog::set_default_logger(log::logger_);
 }
 
 MHA_NAMESPACE_END

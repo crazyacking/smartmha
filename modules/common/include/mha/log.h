@@ -24,13 +24,22 @@ MHA_NAMESPACE_BEGIN
 class log {
   public:
     static void init();
+    static std::shared_ptr<spdlog::logger> getAppLogger() {
+        if (!logger_) {
+            init();
+        }
+        return logger_;
+    }
+
+  private:
+    static std::shared_ptr<spdlog::logger> logger_;
 };
 
 // logging macros
-#define MHA_TRACE(...) logging::getAppLogger()->trace(__VA_ARGS__)
-#define MHA_INFO(...)  logging::getAppLogger()->info(__VA_ARGS__)
-#define MHA_WARN(...)  logging::getAppLogger()->warn(__VA_ARGS__)
-#define MHA_ERROR(...) logging::getAppLogger()->error(__VA_ARGS__)
-#define MHA_FATAL(...) logging::getAppLogger()->fatal(__VA_ARGS__)
+#define MHA_LOG_TRACE(...) log::getAppLogger()->trace(__VA_ARGS__)
+#define MHA_LOG_INFO(...)  log::getAppLogger()->info(__VA_ARGS__)
+#define MHA_LOG_WARN(...)  log::getAppLogger()->warn(__VA_ARGS__)
+#define MHA_LOG_ERROR(...) log::getAppLogger()->error(__VA_ARGS__)
+#define MHA_LOG_FATAL(...) log::getAppLogger()->fatal(__VA_ARGS__)
 
 MHA_NAMESPACE_END

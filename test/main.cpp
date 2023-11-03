@@ -18,8 +18,8 @@
 #include "mha/global.h"
 #include "mha/http_client.h"
 #include "mha/log.h"
-#include "mha/utils.h"
 #include "mha/raft.h"
+#include "mha/utils.h"
 #include <iostream>
 
 using namespace MHA_NAMESPACE;
@@ -38,17 +38,13 @@ int main(int argc, char *argv[]) {
     }
 
     configuration config(args);
-    SPDLOG_INFO("member name: {}", config.member.name);
+    MHA_LOG_INFO("member name: {}", config.member.name);
 
     const auto client_ = std::make_unique<HttpClient>("https://www.cnblogs.com/");
 
     int status{-1};
     std::string response_body = client_->get("", {}, &status);
-    if (status == 200) {
-        std::cout << "response_body=" << response_body << std::endl;
-        // SPDLOG_INFO("response_body={}", response_body);
-    }
-    std::cout << "----------- smartmha end -----------" << std::endl;
-    // SPDLOG_INFO("----------- smartmha end -----------");
+    MHA_LOG_INFO("http_status={} response_body={}", response_body);
+    MHA_LOG_INFO("----------- smartmha end -----------");
     return 0;
 }
