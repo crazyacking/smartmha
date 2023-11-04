@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
 
     int status{-1};
     std::string response_body = client_->get("", {}, &status);
-    MHA_LOG_INFO("http_status={} response_body={}", response_body);
+    MHA_LOG_INFO("http_status={} response_body={}", status, response_body);
     MHA_LOG_INFO("----------- smartmha end -----------");
     return 0;
 }
