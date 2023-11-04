@@ -109,7 +109,7 @@ std::string HttpClient::get_via_curl(const std::string &path, const std::vector<
     curl_easy_setopt(curl, CURLOPT_TIMEOUT, timeout_sec_);
     CURLcode res = curl_easy_perform(curl);
     if (res != CURLE_OK) {
-        SPDLOG_ERROR("error: {}", curl_easy_strerror(res));
+        MHA_LOG_ERROR("error: {}", curl_easy_strerror(res));
         return "";
     }
     setup_status_code(status, curl);
@@ -132,7 +132,7 @@ std::string HttpClient::post_via_curl(const std::string &path, const std::string
     curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, body.size());
     CURLcode res = curl_easy_perform(curl);
     if (res != CURLE_OK) {
-        SPDLOG_ERROR("error: {}", curl_easy_strerror(res));
+        MHA_LOG_ERROR("error: {}", curl_easy_strerror(res));
         return "";
     }
     setup_status_code(status, curl);
