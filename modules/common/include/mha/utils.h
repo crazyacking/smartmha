@@ -20,6 +20,7 @@
 #include <atomic>
 #include <cassert>
 #include <chrono>
+#include <mutex>
 #include <shared_mutex>
 #include <string>
 
