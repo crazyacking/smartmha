@@ -20,7 +20,7 @@
 #define SMARTMHA_HTTP_CLIENT_H
 
 #include "mha/base.h"
-#include "utils.h"
+#include "mha/utils.h"
 #include <curl/curl.h>
 #include <string>
 #include <vector>

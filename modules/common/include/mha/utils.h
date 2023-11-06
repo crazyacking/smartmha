@@ -20,6 +20,8 @@
 #include <atomic>
 #include <cassert>
 #include <chrono>
+#include <iomanip>
+#include <mutex>
 #include <shared_mutex>
 #include <string>
 
@@ -52,11 +54,11 @@ typedef std::shared_lock<mha_lock_mutex> mha_read_lock;
 
 static auto GetDate() -> std::string {
     auto now = std::chrono::system_clock::now();
-    auto tt  = std::chrono::system_clock::to_time_t(now);
-    auto tm  = localtime(&tt);
-    char buff[12];
-    std::sprintf(buff, "%d-%02d-%02d", tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday);
-    return buff;
+    auto itt = std::chrono::system_clock::to_time_t(now);
+
+    std::ostringstream ss;
+    ss << std::put_time(std::localtime(&itt), "%Y-%m-%d");
+    return ss.str();
 }
 
 class Spinlock {
