@@ -2,6 +2,7 @@ set(module common)
 
 message(STATUS "==> Lib ${module}")
 
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 include(FetchContent)
 FetchContent_Declare(cxxopts URL https://github.com/jarro2783/cxxopts/archive/refs/tags/v3.1.1.tar.gz)
 FetchContent_Declare(yaml-cpp URL https://github.com/jbeder/yaml-cpp/archive/refs/tags/0.8.0.tar.gz)
