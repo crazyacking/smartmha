@@ -15,7 +15,6 @@
 // Authors: Dylan Jiang(crazyacking@gmail.com)
 
 #include "mha/config.h"
-#include "mha/global.h"
 #include "mha/http_client.h"
 #include "mha/log.h"
 #include "mha/raft.h"
@@ -29,8 +28,6 @@ int main(int argc, char *argv[]) {
     log::init();
     auto options    = Option::init();
     const auto args = options.parse(argc, argv);
-
-    const GlobalInitializer global_initializer;
 
     if (args.count("help")) {
         std::cout << options.help() << std::endl;

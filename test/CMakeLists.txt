@@ -19,12 +19,6 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-include_directories(
-        ${PROJECT_SOURCE_DIR}/modules/base/include
-        ${PROJECT_SOURCE_DIR}/modules/raft/include
-        ${PROJECT_SOURCE_DIR}/modules/common/include
-)
-
 file(GLOB TEST_FILES *.cpp)
 foreach (TEST_FILE ${TEST_FILES})
     get_filename_component(TEST_NAME ${TEST_FILE} NAME_WLE)
@@ -34,6 +28,7 @@ foreach (TEST_FILE ${TEST_FILES})
             ${PROJECT_NAME}::base
             ${PROJECT_NAME}::raft
             ${PROJECT_NAME}::common
+            ${PROJECT_NAME}::http
     )
     add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME})
 endforeach ()

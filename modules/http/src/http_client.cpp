@@ -16,7 +16,6 @@
 
 #include "mha/http_client.h"
 #include "mha/log.h"
-#include "spdlog/logger.h"
 
 MHA_NAMESPACE_BEGIN
 
