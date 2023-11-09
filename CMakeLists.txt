@@ -11,4 +11,4 @@ if (CCACHE_PROGRAM)
 endif ()
 
 add_subdirectory(modules)
-add_subdirectory(test)
+add_subdirectory(mha_world)
