@@ -15,13 +15,14 @@
 // Authors: Dylan Jiang(crazyacking@gmail.com)
 
 #include "mha/utils.h"
+#include "gtest/gtest.h"
 #include <iostream>
+#include <mha/log.h>
 
-using namespace std;
 using namespace MHA_NAMESPACE;
 
-int main() {
-    const auto date = GetDate();
-    cout << date << endl;
-    return 0;
+TEST(mha_utils_test, test_get_date) {
+    const auto &date = GetDate();
+    MHA_LOG_INFO(date)
+    EXPECT_EQ(date.size(), 10);
 }
